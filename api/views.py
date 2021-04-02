@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 import django_filters.rest_framework
 
 from rest_framework.filters import SearchFilter
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, generics
 
 from .permissions import IsOwnerOrReadOnly
 from .models import Post, Group
@@ -38,20 +38,20 @@ class CommentViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
 
-class GroupViewSet(viewsets.ModelViewSet):
+class GroupViewSet(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
     serializer_class = GroupSerializer
     queryset = Group.objects.all()
 
 
-class FollowViewSet(viewsets.ModelViewSet):
+class FollowViewSet(generics.ListCreateAPIView):
     serializer_class = FollowSerializer
     filter_backends = [SearchFilter]
     search_fields = ['user__username', 'following__username']
 
     def get_queryset(self):
-        return self.request.user.following
+        return self.request.user.following.all()
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
