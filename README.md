@@ -19,7 +19,7 @@ REST API для социальной сети блогеров [Yatube](https://
 
 1) Клонируйте репозитроий с проектом:
 ```
-git clone https://github.com/rume73/api_yatube
+git clone https://github.com/rume73/api_yatube-project.git
 ```
 2) В созданной директории установите виртуальное окружение, активируйте его и установите необходимые зависимости:
 ```
@@ -67,41 +67,17 @@ API вернет JWT-токен в формате:
 
 При отправке запроcов передавайте токен в заголовке Authorization: Bearer <токен>
 
-## Как работает API_Yatube
+Примеры
 
-##### Пример http-запроса (POST) для создания поста:
-```
-url = 'http://127.0.0.1/api/v1/posts/'
-data = {'text': 'Your post'}
-headers = {'Authorization': 'Bearer your_token'}
-request = requests.post(url, data=data, headers=headers)
-```
-##### Ответ API_Yatube:
-```
-Статус- код 200
+##Примеры обращения к API:
 
-{
-  "id": 0,
-  "text": "string",
-  "author": "string",
-  "pub_date": "2020-08-20T14:15:22Z"
-}
-```
-_____________________________________________
-##### Пример http-запроса (GET) для получения списка подписчиков:
-```
-url = 'http://127.0.0.1:8000/api/v1/follow/'
-headers = {'Authorization': 'Bearer your_token'}
-request = requests.get(api, headers=headers)
-```
-##### Ответ API_Yatube:
-```
-Статус- код 200
+   /redoc/ - Документация
+   /token/ - Получить токен
+   /token/refresh/ - Обновить токен
+   /posts/ - Получить список всех публикаций / Создать новую публикацию
+   /posts/{id}/ - Получить публикацию по id / Обновить по id / Удалить по id
+   /posts/{post_id}/comments/ - Получить список комментариев
+   /posts/{post_id}/comments/{comment_id}/ - Получить комментарий по id / Создать комментарий / Обновить / Удалить комментарий
+   /follow/ - Получить список подписчиков / Создать подписку
+   /group/ - Получить список всех групп / Создать группу
 
-[
-  {
-    "user": "string",
-    "following": "string"
-  }
-]
-```
